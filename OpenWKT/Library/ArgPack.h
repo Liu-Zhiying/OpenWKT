@@ -24,7 +24,7 @@ public:
 	//²ÎÊý
 	T2 arg;
 
-	ArgPack(T2 _arg, T1&& _nextArgPack) : arg(_arg), nextArgPack(static_cast<T1&&>(_nextArgPack)) {}
+	ArgPack(T2& _arg, T1&& _nextArgPack) : arg(_arg), nextArgPack(static_cast<T1&&>(_nextArgPack)) {}
 	ArgPack(T2&& _arg, T1&& _nextArgPack) : arg(static_cast<T2&&>(_arg)), nextArgPack(static_cast<T1&&>(_nextArgPack)) {}
 };
 
@@ -41,7 +41,7 @@ public:
 
 	static constexpr unsigned int argCount = 1;
 
-	ArgPack(T _arg) : arg(_arg) {}
+	ArgPack(T& _arg) : arg(_arg) {}
 	ArgPack(T&& _arg) : arg(static_cast<T&&>(_arg)) {}
 };
 

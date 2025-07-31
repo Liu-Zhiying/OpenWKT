@@ -103,6 +103,7 @@
     <ClInclude Include="Library\HelperFunction.h" />
     <ClInclude Include="Library\KernelVector.h" />
     <ClInclude Include="Library\PlacementNew.h" />
+    <ClInclude Include="Library\Thread.h" />
     <ClInclude Include="Library\Traits.h" />
   </ItemGroup>
   <ItemGroup>

@@ -40,6 +40,9 @@
     <ClInclude Include="Library\Traits.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Library\Thread.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="UnitTest.cpp">

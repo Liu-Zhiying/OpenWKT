@@ -3,7 +3,28 @@
 #include "Library/KernelVector.h"
 #include "Library/ArgPack.h"
 #include "Library/Traits.h"
+#include "Library/Thread.h"
 #include <ntddk.h>
+
+void TestThreadEntry(int a, int b, char c)
+{
+    KdPrint(("aaaaa %d %c\n", a + b, c));
+    return;
+}
+
+void TestThread()
+{
+    //测试普通函数任意球参数创建线程
+    KernelThreadFactory::CreateKernelThread(GENERIC_ALL, NULL, NULL, NULL, TestThreadEntry, 1, 2, 'c');
+
+    auto testThreadEntry2 = [](int x, const char* s) -> void
+        {
+            KdPrint(("bbbbbb %d %s\n", x, s));
+        };
+
+    //测试lambda函数任意参数创建线程
+    KernelThreadFactory::CreateKernelThread(GENERIC_ALL, NULL, NULL, NULL, testThreadEntry2, 1, "asdfsadrfujl");
+}
 
 // 测试 Traits.h 中的类型特征模板
 void TestTraits() {
@@ -139,18 +160,18 @@ void TestKernelVector() {
     // 测试删除操作
     movedVec.PopBack();
     if (movedVec.Length() != 2 || movedVec[0] != 1 || movedVec[1] != 2) {
-        DbgPrint("KernelVector erase test failed\n");
+        DbgPrint("KernelVector erase test failed1\n");
     }
 
     movedVec.Remove(0);
     if (movedVec.Length() != 1 || movedVec[0] != 2) {
-        DbgPrint("KernelVector erase test failed\n");
+        DbgPrint("KernelVector erase test failed2\n");
     }
     
     //测试插入操作
     movedVec.Insert(20, 0);
-    if (movedVec.Length() != 2 || movedVec[0] != 20 || movedVec[0] !=2) {
-        DbgPrint("KernelVector erase test failed\n");
+    if (movedVec.Length() != 2 || movedVec[0] != 20 || movedVec[1] != 2) {
+        DbgPrint("KernelVector erase test failed3\n");
     }
 
     // 测试clear操作
@@ -183,6 +204,7 @@ extern "C" NTSTATUS DriverEntry(PUNICODE_STRING pRegisterPath, PDRIVER_OBJECT pD
     TestArgPack();
     TestHelperFunction();
 	TestKernelVector();
+    TestThread();
 
     return STATUS_SUCCESS;
 }
